@@ -213,7 +213,6 @@ tail -f /path/to/inventree/logs/inventree.log | grep "Category IPN"
 ## 📚 Documentation
 
 - [Installation Guide](INSTALL.md) - Detailed installation steps
-- [Project Summary](PROJECT_SUMMARY.md) - Technical overview
 - [Example Metadata](examples/category_metadata.md) - Sample configurations
 
 ## 🤝 Contributing
