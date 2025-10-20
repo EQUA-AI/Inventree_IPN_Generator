@@ -13,7 +13,7 @@ from django.core.exceptions import ValidationError
 import logging
 import re
 
-from . import PLUGIN_VERSION
+from . import __version__
 
 logger = logging.getLogger("inventree")
 
@@ -50,7 +50,7 @@ class CategoryIPNGeneratorPlugin(EventMixin, ValidationMixin, SettingsMixin, Inv
     NAME = "CategoryIPNGenerator"
     SLUG = "category-ipn-generator"
     DESCRIPTION = "Automatically generate IPNs based on category codes and sequential numbering"
-    VERSION = PLUGIN_VERSION
+    VERSION = __version__
 
     # Additional project information
     AUTHOR = "InvenTree Community"
