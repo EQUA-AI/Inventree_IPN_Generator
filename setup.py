@@ -25,6 +25,11 @@ setuptools.setup(
         "wheel",
     ],
     include_package_data=True,
+    entry_points={
+        "inventree_plugins": [
+            "CategoryIPNGeneratorPlugin = cat_code_ipn_generator:CategoryIPNGeneratorPlugin"
+        ]
+    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Manufacturing",
