@@ -5,4 +5,7 @@ Automatically generates Internal Part Numbers (IPNs) based on
 category metadata containing category codes and sequential numbering.
 """
 
-PLUGIN_VERSION = "1.0.0"
+from .core import CategoryIPNGeneratorPlugin
+
+__version__ = "1.0.0"
+__all__ = ['CategoryIPNGeneratorPlugin']
