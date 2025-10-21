@@ -287,6 +287,47 @@ class CategoryIPNGeneratorPlugin(EventMixin, ValidationMixin, SettingsMixin, Inv
 
         return next_number
 
+    def generate_batch_code(self, instance, old_code, new_code):
+        """Generate batch code (IPN) for a part.
+        
+        This method is called by InvenTree's ValidationMixin when a part needs a batch code.
+        
+        Args:
+            instance: The Part instance
+            old_code: The previous batch code (if any)
+            new_code: The proposed new batch code (if any)
+            
+        Returns:
+            None (sets the IPN directly on the instance)
+        """
+        # Only generate if plugin is active
+        if not self.get_setting('ACTIVE'):
+            logger.debug("Category IPN Generator: Plugin is not active, skipping batch code generation")
+            return
+
+        # Skip if part already has an IPN and SKIP_IF_IPN_EXISTS is enabled
+        if instance.IPN and self.get_setting('SKIP_IF_IPN_EXISTS'):
+            logger.debug(f"Category IPN Generator: Part already has IPN '{instance.IPN}'. Skipping.")
+            return
+
+        # Require category if setting is enabled
+        if not instance.category and self.get_setting('REQUIRE_CATEGORY'):
+            logger.info(f"Category IPN Generator: Part has no category and REQUIRE_CATEGORY is enabled. Skipping.")
+            return
+
+        # Generate IPN
+        try:
+            new_ipn = self.generate_ipn_for_part(instance)
+            
+            if new_ipn:
+                instance.IPN = new_ipn
+                logger.info(f"Category IPN Generator: Generated IPN '{new_ipn}' for part '{instance.name}'")
+            else:
+                logger.warning(f"Category IPN Generator: Could not generate IPN for part '{instance.name}'")
+                
+        except Exception as e:
+            logger.error(f"Category IPN Generator: Error generating IPN for part '{instance.name}': {str(e)}")
+
     def validate_part_ipn(self, ipn: str, part: Part, **kwargs) -> None:
         """Validate that a part's IPN matches the expected format for its category.
         
