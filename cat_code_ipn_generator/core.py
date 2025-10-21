@@ -99,6 +99,14 @@ class CategoryIPNGeneratorPlugin(EventMixin, ValidationMixin, SettingsMixin, Inv
         'SEPARATOR': {
             'name': 'Separator Character',
             'description': 'Character to separate category codes and number (e.g., "-" gives "01-18-00001")',
+            'choices': [
+                ('-', 'Hyphen (-)'),
+                ('_', 'Underscore (_)'),
+                ('.', 'Period (.)'),
+                ('', 'None (no separator)'),
+                ('/', 'Forward Slash (/)'),
+                ('|', 'Pipe (|)'),
+            ],
             'default': '-',
         },
     }
